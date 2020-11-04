@@ -1,0 +1,10 @@
+C:\Users\Tobias\OneDrive\Dokumenter\EL-ingeniør - Informatikk og automatisering (USN)\1. Semester\PB1150P - OOP og databaser\HexaCalculator\HexaCalculator\bin\Debug\HexaCalculator.exe.config
+C:\Users\Tobias\OneDrive\Dokumenter\EL-ingeniør - Informatikk og automatisering (USN)\1. Semester\PB1150P - OOP og databaser\HexaCalculator\HexaCalculator\bin\Debug\HexaCalculator.exe
+C:\Users\Tobias\OneDrive\Dokumenter\EL-ingeniør - Informatikk og automatisering (USN)\1. Semester\PB1150P - OOP og databaser\HexaCalculator\HexaCalculator\bin\Debug\HexaCalculator.pdb
+C:\Users\Tobias\OneDrive\Dokumenter\EL-ingeniør - Informatikk og automatisering (USN)\1. Semester\PB1150P - OOP og databaser\HexaCalculator\HexaCalculator\obj\Debug\HexaCalculator.csprojAssemblyReference.cache
+C:\Users\Tobias\OneDrive\Dokumenter\EL-ingeniør - Informatikk og automatisering (USN)\1. Semester\PB1150P - OOP og databaser\HexaCalculator\HexaCalculator\obj\Debug\HexaCalculator.Form1.resources
+C:\Users\Tobias\OneDrive\Dokumenter\EL-ingeniør - Informatikk og automatisering (USN)\1. Semester\PB1150P - OOP og databaser\HexaCalculator\HexaCalculator\obj\Debug\HexaCalculator.Properties.Resources.resources
+C:\Users\Tobias\OneDrive\Dokumenter\EL-ingeniør - Informatikk og automatisering (USN)\1. Semester\PB1150P - OOP og databaser\HexaCalculator\HexaCalculator\obj\Debug\HexaCalculator.csproj.GenerateResource.cache
+C:\Users\Tobias\OneDrive\Dokumenter\EL-ingeniør - Informatikk og automatisering (USN)\1. Semester\PB1150P - OOP og databaser\HexaCalculator\HexaCalculator\obj\Debug\HexaCalculator.csproj.CoreCompileInputs.cache
+C:\Users\Tobias\OneDrive\Dokumenter\EL-ingeniør - Informatikk og automatisering (USN)\1. Semester\PB1150P - OOP og databaser\HexaCalculator\HexaCalculator\obj\Debug\HexaCalculator.exe
+C:\Users\Tobias\OneDrive\Dokumenter\EL-ingeniør - Informatikk og automatisering (USN)\1. Semester\PB1150P - OOP og databaser\HexaCalculator\HexaCalculator\obj\Debug\HexaCalculator.pdb
