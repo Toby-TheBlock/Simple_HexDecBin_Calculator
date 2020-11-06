@@ -32,9 +32,13 @@ namespace HexaCalculator
             }
         }
 
-        /**
-         * Overloaded method for conversion of hex to decimal.
-         */
+
+
+        /// <summary>
+        /// Converts a array of hexadecimal chars to its 10-base decimal counterpart.  
+        /// </summary>
+        /// <param name="allHexDigits">the ordered array of hexadecimal digits from left to rigth.</param>
+        /// <returns>the converted decimal number.</returns>
         public string ConvertInput(char[] allHexDigits)
         {
             List<object> tmpNums = new List<object>();
@@ -69,6 +73,14 @@ namespace HexaCalculator
             }
         }
 
+
+
+        /// <summary>
+        /// Converts a single hex number based on its value and its magnintued, to its decimal counterpart.
+        /// </summary>
+        /// <param name="digitToConvert">the hexadecimal char.</param>
+        /// <param name="digitPosition">the magnitued/position of the provided digit.</param>
+        /// <returns>the decimal number as typeof int or decimal.</returns>
         private object ConvertFromHexToDec(string digitToConvert, int digitPosition)
         {
             int num;
@@ -86,6 +98,13 @@ namespace HexaCalculator
             return num * Convert.ToInt32(Math.Pow(16, digitPosition));
         }
 
+
+
+        /// <summary>
+        /// Checks if a single number or the sum of multiple numbers, inside a list of number objects, would cause integer overflow. 
+        /// </summary>
+        /// <param name="numbersToCheck">list with number objects like int and decimal.</param>
+        /// <returns>true/false based on the result of the check.</returns>
         private bool CheckForOverFlow(List<object> numbersToCheck)
         {
             int totalSum = 0;
@@ -107,37 +126,49 @@ namespace HexaCalculator
             return false;
         }
 
-        /**
-         * Overloaded method for conversion of decimal to hex.
-         */
+
+
+        /// <summary>
+        /// Converts a string containing a decimal number to its hexadecimal counterpart. 
+        /// </summary>
+        /// <param name="decimalNumber">the decimal number to convert.</param>
+        /// <returns>hex representation of the input number or error.</returns>
         public string ConvertInput(string decimalNumber)
         {
-            string convertedResult = "";
-            int dividend = Convert.ToInt32(ReverseString(decimalNumber));
+            int dividend;
 
-            if (dividend > 15)
+            if (Int32.TryParse(ReverseString(decimalNumber), out dividend))
             {
-                int remainder = 0;
-
-                while (dividend > 16)
+                string convertedResult = "";
+                
+                if (dividend > 15)
                 {
-                    remainder = dividend % 16;
-                    convertedResult += remainder > 9 ? ConvertFromDecToHex(remainder) : Convert.ToString(remainder);
-                    dividend /= 16;
+                    while (dividend > 16)
+                    {
+                        int remainder = dividend % 16;
+                        convertedResult += remainder > 9 ? ConvertFromDecToHex(remainder) : Convert.ToString(remainder);
+                        dividend /= 16;
+                    }
+
+                    convertedResult += dividend;
+                }
+                else
+                {
+                    convertedResult = dividend > 9 ? ConvertFromDecToHex(dividend) : Convert.ToString(dividend);
                 }
 
-                convertedResult += dividend;
+                return ReverseString(convertedResult);
             }
             else
             {
-                convertedResult = dividend > 9 ? ConvertFromDecToHex(dividend) : Convert.ToString(dividend);
+                return "Error";
             }
-
-            return ReverseString(convertedResult);
         }
 
+
+
         /// <summary>
-        /// Takes a string and rever
+        /// Reverses the provided string.
         /// </summary>
         /// <param name="stringToReverse">the string to reverse.</param>
         /// <returns>the reversed string.</returns>
@@ -148,8 +179,10 @@ namespace HexaCalculator
             return new String(array);
         } 
 
+
+
         /// <summary>
-        /// Takes a integer and looks for its hexadecimal counterpart.
+        /// Takes a integer and looks up its hexadecimal counterpart.
         /// </summary>
         /// <param name="numberToConvert">the decimal number which needs converting.</param>
         /// <returns>hex representation of the input number.</returns>
