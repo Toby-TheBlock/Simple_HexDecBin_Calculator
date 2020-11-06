@@ -35,13 +35,13 @@ namespace HexaCalculator
         /**
          * Overloaded method for conversion of hex to decimal.
          */
-        public string ConvertInput(string[] allHexDigits)
+        public string ConvertInput(char[] allHexDigits)
         {
             List<object> tmpNums = new List<object>();
 
             for (int i = 0; i < allHexDigits.Length; i++)
             {
-                tmpNums.Add(ConvertFromHexToDec(allHexDigits[i], i));
+                tmpNums.Add(ConvertFromHexToDec(Convert.ToString(allHexDigits[i]), i));
             }
 
             if (CheckForOverFlow(tmpNums))
@@ -110,31 +110,52 @@ namespace HexaCalculator
         /**
          * Overloaded method for conversion of decimal to hex.
          */
-        public string ConvertInput(int decminalNumber)
+        public string ConvertInput(string decimalNumber)
         {
             string convertedResult = "";
+            int dividend = Convert.ToInt32(ReverseString(decimalNumber));
 
-            return convertedResult;
+            if (dividend > 15)
+            {
+                int remainder = 0;
+
+                while (dividend > 16)
+                {
+                    remainder = dividend % 16;
+                    convertedResult += remainder > 9 ? ConvertFromDecToHex(remainder) : Convert.ToString(remainder);
+                    dividend /= 16;
+                }
+
+                convertedResult += dividend;
+            }
+            else
+            {
+                convertedResult = dividend > 9 ? ConvertFromDecToHex(dividend) : Convert.ToString(dividend);
+            }
+
+            return ReverseString(convertedResult);
         }
 
-
-        public string ConvertFromDecToHex(string numberToConvert)
+        /// <summary>
+        /// Takes a string and rever
+        /// </summary>
+        /// <param name="stringToReverse">the string to reverse.</param>
+        /// <returns>the reversed string.</returns>
+        private string ReverseString(string stringToReverse)
         {
-            int divider = 0;
-            if (Int32.TryParse(numberToConvert, out divider))
-            {
+            char[] array = stringToReverse.ToCharArray();
+            Array.Reverse(array);
+            return new String(array);
+        } 
 
-            }
-            /*
-            if (!Decimal.TryParse(digitToConvert, out num))
-            {
-                num = hexValues[digitToConvert];
-            }
-
-            return (num * Convert.ToInt32(Math.Pow(16, digitPosition)));
-            */
-
-            return "";
+        /// <summary>
+        /// Takes a integer and looks for its hexadecimal counterpart.
+        /// </summary>
+        /// <param name="numberToConvert">the decimal number which needs converting.</param>
+        /// <returns>hex representation of the input number.</returns>
+        public string ConvertFromDecToHex(int numberToConvert)
+        {
+            return hexValues.FirstOrDefault(x => x.Value == numberToConvert).Key;
         }
     }
 }

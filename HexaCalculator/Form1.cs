@@ -32,6 +32,7 @@ namespace HexaCalculator
                 if (currentElement is ComboBox)
                 {
                     ComboBox cbo = (ComboBox) currentElement;
+                    cbo.Text = "0";
                     cbo.Items.Clear();
                     if (collectionType == "hex")
                     {
@@ -41,8 +42,6 @@ namespace HexaCalculator
                     {
                         cbo.Items.AddRange(Converter.Singleton.CollectionDigits.Take(10).ToArray());
                     }
-
-                    cbo.SelectedIndexChanged += new EventHandler(ShowCalculatedValue);
                 }
                 
             }
@@ -50,14 +49,14 @@ namespace HexaCalculator
 
         private void ShowCalculatedValue(object sender, EventArgs e)
         {
-            string[] cboValues = new string[comboBoxCount];
+            char[] cboValues = new char[comboBoxCount];
 
             foreach (Control currentElement in plInputs.Controls)
             {
                 if (currentElement is ComboBox)
                 {
                     ComboBox cbo = (ComboBox)currentElement;
-                    cboValues[Convert.ToInt32(cbo.Name.Substring(8)) - 1] = cbo.Text;
+                    cboValues[Convert.ToInt32(cbo.Name.Substring(8)) - 1] = Convert.ToChar(cbo.Text);
                 }
             }
 
@@ -67,8 +66,8 @@ namespace HexaCalculator
             }
             else
             {
-                int[] numbers = Array.ConvertAll(cboValues, int.Parse); 
-                txtOutput.Text = Converter.Singleton.ConvertInput(numbers.Sum());
+                string number = new String(cboValues); 
+                txtOutput.Text = Converter.Singleton.ConvertInput(number);
             }
         }
 
@@ -81,6 +80,8 @@ namespace HexaCalculator
                 Name = "cboInput" + comboBoxCount,
             };
 
+
+            //cbo.SelectedIndexChanged += new EventHandler(ShowCalculatedValue);
             plInputs.Controls.Add(newDigit);
         }
 
@@ -88,23 +89,23 @@ namespace HexaCalculator
         {
             if (conversionTypeHex)
             {
+                SetComboBoxCollections("dec");
                 conversionTypeHex = false;
 
                 lblHeadLeft.Text = "Decimal";
                 lblHeadRight.Text = "Hexadecimal";
 
-                btnChangeConversion.Text = "Convert From Dec to Hex";
-                SetComboBoxCollections("dec");
+                btnChangeConversion.Text = "Convert From Hex to Dec";
             }
             else
             {
+                SetComboBoxCollections("hex");
                 conversionTypeHex = true;
 
                 lblHeadLeft.Text = "Hexadecimal";
                 lblHeadRight.Text = "Decimal";
 
-                btnChangeConversion.Text = "Convert From Hex to Dec";
-                SetComboBoxCollections("hex");
+                btnChangeConversion.Text = "Convert From Dec to Hex";
             }
         }
 
@@ -119,5 +120,11 @@ namespace HexaCalculator
             }
 
         }
+
+        private void PreventManualInput(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
     }
 }
