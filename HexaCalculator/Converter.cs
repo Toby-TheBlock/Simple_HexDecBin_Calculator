@@ -37,8 +37,8 @@ namespace HexaCalculator
         /// <summary>
         /// Converts a array of hexadecimal chars to its 10-base decimal counterpart.  
         /// </summary>
-        /// <param name="allHexDigits">the ordered array of hexadecimal digits from left to rigth.</param>
-        /// <returns>the converted decimal number.</returns>
+        /// <param name="allHexDigits">The ordered array of hexadecimal digits from left to rigth.</param>
+        /// <returns>The converted decimal number.</returns>
         public string ConvertInput(char[] allHexDigits)
         {
             List<object> tmpNums = new List<object>();
@@ -50,18 +50,18 @@ namespace HexaCalculator
 
             if (CheckForOverFlow(tmpNums))
             {
-                MessageBox.Show("The converted number overflows the C# int datatype, switching to decimal datatype!");
+                MessageBox.Show("The converted number overflows the C# int datatype, switching to double datatype!");
                 
-                decimal overflowSave = 0;
+                double overflowSave = 0;
                 foreach (object value in tmpNums)
                 {
                     if (value is int)
                     {
-                        overflowSave += Convert.ToDecimal(value);
+                        overflowSave += Convert.ToDouble(value);
                     }
                     else
                     {
-                        overflowSave += (decimal)value;
+                        overflowSave += (double)value;
                     }
                 }
                 return Convert.ToString(overflowSave);
@@ -78,24 +78,39 @@ namespace HexaCalculator
         /// <summary>
         /// Converts a single hex number based on its value and its magnintued, to its decimal counterpart.
         /// </summary>
-        /// <param name="digitToConvert">the hexadecimal char.</param>
-        /// <param name="digitPosition">the magnitued/position of the provided digit.</param>
-        /// <returns>the decimal number as typeof int or decimal.</returns>
+        /// <param name="digitToConvert">The hexadecimal char.</param>
+        /// <param name="digitPosition">The magnitued/position of the provided digit.</param>
+        /// <returns>The decimal number as typeof int or decimal.</returns>
         private object ConvertFromHexToDec(string digitToConvert, int digitPosition)
         {
             int num;
             if (!Int32.TryParse(digitToConvert, out num))
             {
-                num = hexValues[digitToConvert];
+                if (hexValues.ContainsKey(digitToConvert.ToUpper()))
+                {
+                    num = hexValues[digitToConvert.ToUpper()];
+                } 
+                else
+                {
+                    throw new Exception("Invailded input!");
+                }
             }
 
-            if ((num * Convert.ToInt32(Math.Pow(16, digitPosition))) < 0)
+            try
             {
-                decimal overflowSave = num;
-                return overflowSave * Convert.ToDecimal(Math.Pow(16, digitPosition));
+                if (Convert.ToInt32(num * Math.Pow(16, digitPosition)) < 0)
+                {
+                    double overflowSave = num;
+                    return overflowSave * Convert.ToDouble(Math.Pow(16, digitPosition));
+                }
+            } 
+            catch
+            {
+                return Convert.ToDouble(num * Math.Pow(16, digitPosition));
             }
+            
 
-            return num * Convert.ToInt32(Math.Pow(16, digitPosition));
+            return Convert.ToInt32(num * Math.Pow(16, digitPosition));
         }
 
 
@@ -103,15 +118,15 @@ namespace HexaCalculator
         /// <summary>
         /// Checks if a single number or the sum of multiple numbers, inside a list of number objects, would cause integer overflow. 
         /// </summary>
-        /// <param name="numbersToCheck">list with number objects like int and decimal.</param>
-        /// <returns>true/false based on the result of the check.</returns>
+        /// <param name="numbersToCheck">List with number objects like int and decimal.</param>
+        /// <returns>True/false based on the result of the check.</returns>
         private bool CheckForOverFlow(List<object> numbersToCheck)
         {
             int totalSum = 0;
 
             foreach (object value in numbersToCheck)
             {
-                if (value is decimal)
+                if (value is double)
                 {
                     return true;
                 }
@@ -131,13 +146,12 @@ namespace HexaCalculator
         /// <summary>
         /// Converts a string containing a decimal number to its hexadecimal counterpart. 
         /// </summary>
-        /// <param name="decimalNumber">the decimal number to convert.</param>
-        /// <returns>hex representation of the input number or error.</returns>
+        /// <param name="decimalNumber">The decimal number to convert.</param>
+        /// <returns>Hex representation of the input number or error.</returns>
         public string ConvertInput(string decimalNumber)
         {
-            int dividend;
-
-            if (Int32.TryParse(ReverseString(decimalNumber), out dividend))
+            ulong dividend;
+            if (UInt64.TryParse(ReverseString(decimalNumber), out dividend))
             {
                 string convertedResult = "";
                 
@@ -145,8 +159,8 @@ namespace HexaCalculator
                 {
                     while (dividend > 16)
                     {
-                        int remainder = dividend % 16;
-                        convertedResult += remainder > 9 ? ConvertFromDecToHex(remainder) : Convert.ToString(remainder);
+                        ulong remainder = dividend % 16;
+                        convertedResult += remainder > 9 ? ConvertFromDecToHex((int)remainder) : Convert.ToString(remainder);
                         dividend /= 16;
                     }
 
@@ -154,14 +168,15 @@ namespace HexaCalculator
                 }
                 else
                 {
-                    convertedResult = dividend > 9 ? ConvertFromDecToHex(dividend) : Convert.ToString(dividend);
+                    convertedResult = dividend > 9 ? ConvertFromDecToHex((int)dividend) : Convert.ToString(dividend);
                 }
 
                 return ReverseString(convertedResult);
             }
             else
             {
-                return "Error";
+                Console.WriteLine(dividend);
+                return "Error UInt64 overflow!";
             }
         }
 
@@ -170,9 +185,9 @@ namespace HexaCalculator
         /// <summary>
         /// Reverses the provided string.
         /// </summary>
-        /// <param name="stringToReverse">the string to reverse.</param>
-        /// <returns>the reversed string.</returns>
-        private string ReverseString(string stringToReverse)
+        /// <param name="stringToReverse">The string to reverse.</param>
+        /// <returns>The reversed string.</returns>
+        public string ReverseString(string stringToReverse)
         {
             char[] array = stringToReverse.ToCharArray();
             Array.Reverse(array);
@@ -184,8 +199,8 @@ namespace HexaCalculator
         /// <summary>
         /// Takes a integer and looks up its hexadecimal counterpart.
         /// </summary>
-        /// <param name="numberToConvert">the decimal number which needs converting.</param>
-        /// <returns>hex representation of the input number.</returns>
+        /// <param name="numberToConvert">The decimal number which needs converting.</param>
+        /// <returns>Hex representation of the input number.</returns>
         public string ConvertFromDecToHex(int numberToConvert)
         {
             return hexValues.FirstOrDefault(x => x.Value == numberToConvert).Key;
