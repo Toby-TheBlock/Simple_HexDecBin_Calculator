@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HexaCalculator
+namespace HexDecBin_Calculator
 {
     static class Program
     { 

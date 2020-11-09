@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace HexaCalculator
+namespace HexDecBin_Calculator
 {
     public partial class Form1 : Form
     {

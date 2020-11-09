@@ -1,4 +1,4 @@
-﻿namespace HexaCalculator
+﻿namespace HexDecBin_Calculator
 {
     partial class Form1
     {
