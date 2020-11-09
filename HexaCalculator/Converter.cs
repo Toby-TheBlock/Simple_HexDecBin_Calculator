@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace HexaCalculator
@@ -175,11 +173,33 @@ namespace HexaCalculator
             }
             else
             {
-                Console.WriteLine(dividend);
-                return "Error UInt64 overflow!";
+                if (!ContainsDigitsOnly(decimalNumber))
+                {
+                    throw new Exception("Invailded input!");
+                }
+                else
+                {
+                    return "Error UInt64 overflow!";
+                }
             }
         }
 
+
+
+        /// <summary>
+        /// Goes through each char in a string and checks if its between 0-9.
+        /// </summary>
+        /// <param name="str">The string which is going to be checked.</param>
+        /// <returns>True if the string ony contains number chars, False if it doesn't.</returns>
+        private bool ContainsDigitsOnly(string str)
+        {
+            foreach (char c in str)
+            {
+                if (c < '0' || c > '9')
+                    return false;
+            }
+            return true;
+        }
 
 
         /// <summary>

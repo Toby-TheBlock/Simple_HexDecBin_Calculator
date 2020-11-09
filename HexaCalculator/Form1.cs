@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace HexaCalculator
@@ -51,7 +46,7 @@ namespace HexaCalculator
 
 
         /// <summary>
-        /// Temporarly disables a eventhandler on the control element, in order to change its text-property to the default value.
+        /// Temporarly disables a eventhandler on the control element, in order to change its text-property to a default value.
         /// </summary>
         /// <param name="element">The control element which is to be reset.</param>
         private void ResetInput(Control element)
@@ -70,7 +65,6 @@ namespace HexaCalculator
                 element.Text = "";
                 ManageEventhandler(castedElement, true);
             }
-            
             txtOutput.Text = "0";
         }
 
@@ -117,9 +111,9 @@ namespace HexaCalculator
                 MessageBox.Show(error.Message);
                 txtInput.Text = txtInput.Text.Remove(txtInput.Text.Length - 1);
                 txtInput.SelectionLength = txtInput.Text.Length;
+                txtOutput.Text = "0";
             }
-        }
-            
+        }    
 
 
 
@@ -225,6 +219,7 @@ namespace HexaCalculator
                 txt.TextChanged -= new EventHandler(ShowCalculatedValue);
             }
         }
+
 
 
         /// <summary>
