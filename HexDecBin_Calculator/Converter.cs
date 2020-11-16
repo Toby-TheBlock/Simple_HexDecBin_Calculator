@@ -43,7 +43,7 @@ namespace HexDecBin_Calculator
 
             for (int i = 0; i < allHexDigits.Length; i++)
             {
-                tmpNums.Add(ConvertFromHexToDec(Convert.ToString(allHexDigits[i]), i));
+                tmpNums.Add(ConvertFromHexToDec(allHexDigits[i], i));
             }
 
             if (CheckForOverFlow(tmpNums))
@@ -74,19 +74,90 @@ namespace HexDecBin_Calculator
 
 
         /// <summary>
+        /// Converts a string containing a decimal number to its hexadecimal counterpart. 
+        /// </summary>
+        /// <param name="decimalNumber">The decimal number to convert.</param>
+        /// <returns>Hex representation of the input number or error.</returns>
+        public string ConvertInput(string decimalNumber)
+        {
+            ulong dividend;
+            if (UInt64.TryParse(decimalNumber, out dividend))
+            {
+                string convertedResult = "";
+
+                if (dividend > 15)
+                {
+                    while (dividend > 16)
+                    {
+                        ulong remainder = dividend % 16;
+                        convertedResult += remainder > 9 ? ConvertFromDecToHex((int)remainder) : Convert.ToString(remainder);
+                        dividend /= 16;
+                    }
+
+                    convertedResult += dividend;
+                }
+                else
+                {
+                    convertedResult = dividend > 9 ? ConvertFromDecToHex((int)dividend) : Convert.ToString(dividend);
+                }
+
+                return ReverseString(convertedResult);
+            }
+            else
+            {
+                if (!ContainsDigitsOnly(decimalNumber))
+                {
+                    throw new Exception("Invailded input!");
+                }
+                else
+                {
+                    return "Error UInt64 overflow!";
+                }
+            }
+        }
+
+
+
+        public string ConvertInputToBin(string decimalNum)
+        {
+            string binaryRepersentation = "";
+            int num = Convert.ToInt32(decimalNum);
+  
+            while (num > 0)
+            {
+                binaryRepersentation += num % 2;
+                num /= 2;
+            }
+
+            if (binaryRepersentation.Length % 4 != 0)
+            {
+                int numOfNibbels = (binaryRepersentation.Length/4)+1;
+                while (binaryRepersentation.Length < numOfNibbels * 4)
+                {
+                    binaryRepersentation += 0;
+                }
+            }
+
+            return binaryRepersentation.Length == 0 ? "0000" : ReverseString(binaryRepersentation);
+        }
+
+
+
+        /// <summary>
         /// Converts a single hex number based on its value and its magnintued, to its decimal counterpart.
         /// </summary>
         /// <param name="digitToConvert">The hexadecimal char.</param>
         /// <param name="digitPosition">The magnitued/position of the provided digit.</param>
         /// <returns>The decimal number as typeof int or decimal.</returns>
-        private object ConvertFromHexToDec(string digitToConvert, int digitPosition)
+        private object ConvertFromHexToDec(char digitToConvert, int digitPosition)
         {
+            string digit = Convert.ToString(digitToConvert);
             int num;
-            if (!Int32.TryParse(digitToConvert, out num))
+            if (!Int32.TryParse(digit, out num))
             {
-                if (hexValues.ContainsKey(digitToConvert.ToUpper()))
+                if (hexValues.ContainsKey(digit.ToUpper()))
                 {
-                    num = hexValues[digitToConvert.ToUpper()];
+                    num = hexValues[digit.ToUpper()];
                 } 
                 else
                 {
@@ -137,51 +208,6 @@ namespace HexDecBin_Calculator
             }
 
             return false;
-        }
-
-
-
-        /// <summary>
-        /// Converts a string containing a decimal number to its hexadecimal counterpart. 
-        /// </summary>
-        /// <param name="decimalNumber">The decimal number to convert.</param>
-        /// <returns>Hex representation of the input number or error.</returns>
-        public string ConvertInput(string decimalNumber)
-        {
-            ulong dividend;
-            if (UInt64.TryParse(ReverseString(decimalNumber), out dividend))
-            {
-                string convertedResult = "";
-                
-                if (dividend > 15)
-                {
-                    while (dividend > 16)
-                    {
-                        ulong remainder = dividend % 16;
-                        convertedResult += remainder > 9 ? ConvertFromDecToHex((int)remainder) : Convert.ToString(remainder);
-                        dividend /= 16;
-                    }
-
-                    convertedResult += dividend;
-                }
-                else
-                {
-                    convertedResult = dividend > 9 ? ConvertFromDecToHex((int)dividend) : Convert.ToString(dividend);
-                }
-
-                return ReverseString(convertedResult);
-            }
-            else
-            {
-                if (!ContainsDigitsOnly(decimalNumber))
-                {
-                    throw new Exception("Invailded input!");
-                }
-                else
-                {
-                    return "Error UInt64 overflow!";
-                }
-            }
         }
 
 

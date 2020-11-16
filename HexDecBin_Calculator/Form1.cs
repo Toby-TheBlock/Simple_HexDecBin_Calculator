@@ -7,17 +7,17 @@ namespace HexDecBin_Calculator
 {
     public partial class Form1 : Form
     {
-        private bool conversionTypeHex;
+        private bool convertHexToDec;
         private int digitCount;
 
         public Form1()
         {
             InitializeComponent();
 
-            conversionTypeHex = true;
+            convertHexToDec = true;
             digitCount = 8;
 
-            foreach (Control currentElement in plInputs.Controls.OfType<ComboBox>())
+            foreach (Control currentElement in panInputs.Controls.OfType<ComboBox>())
             {
                 SetComboBoxCollections((ComboBox)currentElement);
             }
@@ -33,7 +33,7 @@ namespace HexDecBin_Calculator
         {
             ResetInput(cBox);
             cBox.Items.Clear();
-            if (conversionTypeHex)
+            if (convertHexToDec)
             {
                 cBox.Items.AddRange(Converter.Singleton.CollectionDigits);
             }
@@ -66,6 +66,7 @@ namespace HexDecBin_Calculator
                 ManageEventhandler(castedElement, true);
             }
             txtOutput.Text = "0";
+            txtBinary.Text = "0";
         }
 
 
@@ -87,7 +88,7 @@ namespace HexDecBin_Calculator
             {
                 cboValues = new char[digitCount];
 
-                foreach (Control currentElement in plInputs.Controls.OfType<ComboBox>())
+                foreach (Control currentElement in panInputs.Controls.OfType<ComboBox>())
                 {
                     ComboBox cbo = (ComboBox)currentElement;
                     cboValues[Convert.ToInt32(cbo.Name.Substring(8)) - 1] = Convert.ToChar(cbo.Text);
@@ -96,14 +97,17 @@ namespace HexDecBin_Calculator
 
             try
             {
-                if (conversionTypeHex)
+                if (convertHexToDec)
                 {
-                    txtOutput.Text = Converter.Singleton.ConvertInput(cboValues);
+                    string result = Converter.Singleton.ConvertInput(cboValues);
+                    txtOutput.Text = result;
+                    txtBinary.Text = Converter.Singleton.ConvertInputToBin(result);
                 }
                 else
                 {
-                    string number = new String(cboValues);
+                    string number = Converter.Singleton.ReverseString(new String(cboValues));
                     txtOutput.Text = Converter.Singleton.ConvertInput(number);
+                    txtBinary.Text = Converter.Singleton.ConvertInputToBin(number);
                 }
             }
             catch (Exception error)
@@ -112,6 +116,7 @@ namespace HexDecBin_Calculator
                 txtInput.Text = txtInput.Text.Remove(txtInput.Text.Length - 1);
                 txtInput.SelectionLength = txtInput.Text.Length;
                 txtOutput.Text = "0";
+                txtBinary.Text = "0";
             }
         }    
 
@@ -125,9 +130,9 @@ namespace HexDecBin_Calculator
         {
             if (polarity == 1 && digitCount % 8 == 1 || polarity == -1 && digitCount % 8 == 0)
             {
-                int extraHeight = 55 * (digitCount / (8 * (digitCount / 8))) * polarity;
-                plInputs.Height += extraHeight;
-                plButtonContainer.Location = new Point(plButtonContainer.Location.X, plButtonContainer.Location.Y + extraHeight);
+                int extraHeight = 65 * (digitCount / (8 * (digitCount / 8))) * polarity;
+                panInputs.Height += extraHeight;
+                panButtonContainer.Location = new Point(panButtonContainer.Location.X, panButtonContainer.Location.Y + extraHeight);
                 this.Height += extraHeight;
             }
         }
@@ -156,8 +161,8 @@ namespace HexDecBin_Calculator
             };
 
             SetComboBoxCollections(newDigit);
-            plInputs.Controls.Add(newDigit);
-            plInputs.Controls.Add(newLabel);
+            panInputs.Controls.Add(newDigit);
+            panInputs.Controls.Add(newLabel);
         }
 
 
@@ -172,11 +177,11 @@ namespace HexDecBin_Calculator
             // therefore it needs to be run twice. In order to remove both label and combobox. 
             for (int i = 0; i < 2; i++)
             {
-                foreach (Control currentElement in plInputs.Controls)
+                foreach (Control currentElement in panInputs.Controls)
                 {
                     if (Convert.ToInt32(currentElement.Name.Substring(8)) == elementIndex)
                     {
-                        plInputs.Controls.Remove(currentElement);
+                        panInputs.Controls.Remove(currentElement);
                     }
                 }
             }
@@ -246,9 +251,9 @@ namespace HexDecBin_Calculator
 
         private void btnChangeConversion_Click(object sender, EventArgs e)
         {
-            if (conversionTypeHex)
+            if (convertHexToDec)
             {
-                conversionTypeHex = false;
+                convertHexToDec = false;
 
                 lblHeadLeft.Text = "Decimal";
                 lblHeadRight.Text = "Hexadecimal";
@@ -257,7 +262,7 @@ namespace HexDecBin_Calculator
             }
             else
             {
-                conversionTypeHex = true;
+                convertHexToDec = true;
 
                 lblHeadLeft.Text = "Hexadecimal";
                 lblHeadRight.Text = "Decimal";
@@ -267,7 +272,7 @@ namespace HexDecBin_Calculator
 
             ResetInput(txtInput);
 
-            foreach (Control currentElement in plInputs.Controls.OfType<ComboBox>())
+            foreach (Control currentElement in panInputs.Controls.OfType<ComboBox>())
             {
                 SetComboBoxCollections((ComboBox)currentElement);
             }
@@ -280,7 +285,7 @@ namespace HexDecBin_Calculator
             digitCount++;
             SetInputPanelHeight(1);
             int multiplier = digitCount % 8 > 0 ? digitCount % 8 : 8;
-            AddExtraDigit(new Point(plInputs.Width - (44*multiplier+2), plInputs.Height-30));
+            AddExtraDigit(new Point(panInputs.Width - (44*multiplier+2), panInputs.Height-30));
             SetRemovedBtnStatus();
         }
 
@@ -298,7 +303,7 @@ namespace HexDecBin_Calculator
 
         private void btnClearInput_Click(object sender, EventArgs e)
         {
-            foreach (Control currentElement in plInputs.Controls.OfType<ComboBox>())
+            foreach (Control currentElement in panInputs.Controls.OfType<ComboBox>())
             {
                 ResetInput((ComboBox)currentElement);
             }
