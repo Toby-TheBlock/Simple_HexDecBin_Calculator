@@ -7,14 +7,14 @@ namespace HexDecBin_Calculator
 {
     public partial class Form1 : Form
     {
-        private bool convertHexToDec;
+        private int conversionType; // 1 = HexToDec&Bin, 2 = DecToHex&Bin, 3 = BinToDec&Hex
         private int digitCount;
 
         public Form1()
         {
             InitializeComponent();
 
-            convertHexToDec = true;
+            conversionType = 1;
             digitCount = 8;
 
             foreach (Control currentElement in panInputs.Controls.OfType<ComboBox>())
@@ -33,13 +33,17 @@ namespace HexDecBin_Calculator
         {
             ResetInput(cBox);
             cBox.Items.Clear();
-            if (convertHexToDec)
+            switch(conversionType)
             {
-                cBox.Items.AddRange(Converter.Singleton.CollectionDigits);
-            }
-            else
-            {
-                cBox.Items.AddRange(Converter.Singleton.CollectionDigits.Take(10).ToArray());
+                case 1:
+                    cBox.Items.AddRange(Converter.Singleton.CollectionDigits);
+                    break;
+                case 2:
+                    cBox.Items.AddRange(Converter.Singleton.CollectionDigits.Take(10).ToArray());
+                    break;
+                case 3:
+                    cBox.Items.AddRange(Converter.Singleton.CollectionDigits.Take(2).ToArray());
+                    break;
             }
         }
 
@@ -65,8 +69,17 @@ namespace HexDecBin_Calculator
                 element.Text = "";
                 ManageEventhandler(castedElement, true);
             }
-            txtOutput.Text = "0";
-            txtBinary.Text = "0";
+        }
+
+
+
+        /// <summary>
+        /// Resets all output-textboxes i the GUI to their default value.
+        /// </summary>
+        private void ResetOutput()
+        {
+            txtOutputTop.Text = "0";
+            txtOutputBottom.Text = "0";
         }
 
 
@@ -97,17 +110,24 @@ namespace HexDecBin_Calculator
 
             try
             {
-                if (convertHexToDec)
+                switch (conversionType)
                 {
-                    string result = Converter.Singleton.ConvertInput(cboValues);
-                    txtOutput.Text = result;
-                    txtBinary.Text = Converter.Singleton.ConvertInputToBin(result);
-                }
-                else
-                {
-                    string number = Converter.Singleton.ReverseString(new String(cboValues));
-                    txtOutput.Text = Converter.Singleton.ConvertInput(number);
-                    txtBinary.Text = Converter.Singleton.ConvertInputToBin(number);
+                    case 1:
+                        string resultHexToDecAndBin = Converter.Singleton.ConvertInput(cboValues);
+                        txtOutputTop.Text = resultHexToDecAndBin;
+                        txtOutputBottom.Text = Converter.Singleton.ConvertDecToBin(resultHexToDecAndBin);
+                        break;
+                    case 2:
+                        string resultDecToHexAndBin = Converter.Singleton.ReverseString(new String(cboValues));
+                        txtOutputTop.Text = Converter.Singleton.ConvertInput(resultDecToHexAndBin);
+                        txtOutputBottom.Text = Converter.Singleton.ConvertDecToBin(resultDecToHexAndBin);
+                        break;
+                    case 3:
+                        int[] binaryNums = Array.ConvertAll(cboValues, currentChar => (int)Char.GetNumericValue(currentChar));
+                        string resultBinToHexAndDec = Converter.Singleton.ConvertInput(binaryNums);
+                        txtOutputTop.Text = Converter.Singleton.ConvertInput(resultBinToHexAndDec);
+                        txtOutputBottom.Text = resultBinToHexAndDec;
+                        break;
                 }
             }
             catch (Exception error)
@@ -115,8 +135,7 @@ namespace HexDecBin_Calculator
                 MessageBox.Show(error.Message);
                 txtInput.Text = txtInput.Text.Remove(txtInput.Text.Length - 1);
                 txtInput.SelectionLength = txtInput.Text.Length;
-                txtOutput.Text = "0";
-                txtBinary.Text = "0";
+                ResetOutput();
             }
         }    
 
@@ -249,37 +268,6 @@ namespace HexDecBin_Calculator
 
 
 
-        private void btnChangeConversion_Click(object sender, EventArgs e)
-        {
-            if (convertHexToDec)
-            {
-                convertHexToDec = false;
-
-                lblHeadLeft.Text = "Decimal";
-                lblHeadRight.Text = "Hexadecimal";
-
-                btnChangeConversion.Text = "Convert From Hex to Dec";
-            }
-            else
-            {
-                convertHexToDec = true;
-
-                lblHeadLeft.Text = "Hexadecimal";
-                lblHeadRight.Text = "Decimal";
-
-                btnChangeConversion.Text = "Convert From Dec to Hex";
-            }
-
-            ResetInput(txtInput);
-
-            foreach (Control currentElement in panInputs.Controls.OfType<ComboBox>())
-            {
-                SetComboBoxCollections((ComboBox)currentElement);
-            }
-        }
-
-
-
         private void btnAddDigit_Click(object sender, EventArgs e)
         {
             digitCount++;
@@ -309,6 +297,44 @@ namespace HexDecBin_Calculator
             }
 
             ResetInput(txtInput);
+            ResetOutput();
+        }
+
+
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cboConversionType.SelectedIndex + 1)
+            {
+                case 1:
+                    conversionType = 1;
+                    lblMainHeader.Text = "Hexadecimal";
+                    lblOutputTop.Text = "Decimal";
+                    lblOutputBottom.Text = "Binary";
+                    break;
+
+                case 2:
+                    conversionType = 2;
+                    lblMainHeader.Text = "Decimal";
+                    lblOutputTop.Text = "Hexadecimal";
+                    lblOutputBottom.Text = "Binary";
+                    break;
+
+                case 3:
+                    conversionType = 3;
+                    lblMainHeader.Text = "Binary";
+                    lblOutputTop.Text = "Hexadecimal";
+                    lblOutputBottom.Text = "Decimal";
+                    break;
+            }
+
+            foreach (Control currentElement in panInputs.Controls.OfType<ComboBox>())
+            {
+                SetComboBoxCollections((ComboBox)currentElement);
+            }
+
+            ResetInput(txtInput);
+            ResetOutput();
         }
     }
 }

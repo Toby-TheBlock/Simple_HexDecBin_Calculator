@@ -43,7 +43,7 @@ namespace HexDecBin_Calculator
 
             for (int i = 0; i < allHexDigits.Length; i++)
             {
-                tmpNums.Add(ConvertFromHexToDec(allHexDigits[i], i));
+                tmpNums.Add(ConvertHexToDec(allHexDigits[i], i));
             }
 
             if (CheckForOverFlow(tmpNums))
@@ -76,12 +76,12 @@ namespace HexDecBin_Calculator
         /// <summary>
         /// Converts a string containing a decimal number to its hexadecimal counterpart. 
         /// </summary>
-        /// <param name="decimalNumber">The decimal number to convert.</param>
+        /// <param name="decimalNum">The decimal number to convert.</param>
         /// <returns>Hex representation of the input number or error.</returns>
-        public string ConvertInput(string decimalNumber)
+        public string ConvertInput(string decimalNum)
         {
             ulong dividend;
-            if (UInt64.TryParse(decimalNumber, out dividend))
+            if (UInt64.TryParse(decimalNum, out dividend))
             {
                 string convertedResult = "";
 
@@ -90,7 +90,7 @@ namespace HexDecBin_Calculator
                     while (dividend > 16)
                     {
                         ulong remainder = dividend % 16;
-                        convertedResult += remainder > 9 ? ConvertFromDecToHex((int)remainder) : Convert.ToString(remainder);
+                        convertedResult += remainder > 9 ? ConvertDecToHex((int)remainder) : Convert.ToString(remainder);
                         dividend /= 16;
                     }
 
@@ -98,14 +98,14 @@ namespace HexDecBin_Calculator
                 }
                 else
                 {
-                    convertedResult = dividend > 9 ? ConvertFromDecToHex((int)dividend) : Convert.ToString(dividend);
+                    convertedResult = dividend > 9 ? ConvertDecToHex((int)dividend) : Convert.ToString(dividend);
                 }
 
                 return ReverseString(convertedResult);
             }
             else
             {
-                if (!ContainsDigitsOnly(decimalNumber))
+                if (!ContainsDigitsOnly(decimalNum))
                 {
                     throw new Exception("Invailded input!");
                 }
@@ -117,11 +117,28 @@ namespace HexDecBin_Calculator
         }
 
 
+        public string ConvertInput(int[] binaryDigits)
+        {
+            int decimalNum = 0;
 
-        public string ConvertInputToBin(string decimalNum)
+            for (int i = 0; i < binaryDigits.Length; i++)
+            {
+                decimalNum += binaryDigits[i] * Convert.ToInt32(Math.Pow(2, i));
+            }
+
+            return decimalNum.ToString();
+        }
+
+
+        /// <summary>
+        /// Converts a decimal number to its binary counterpart.
+        /// </summary>
+        /// <param name="decimalNum">The decimal number to convert.</param>
+        /// <returns>String representation of the converted binary number.</returns>
+        public string ConvertDecToBin(string decimalNum)
         {
             string binaryRepersentation = "";
-            int num = Convert.ToInt32(decimalNum);
+            ulong num = Convert.ToUInt64(decimalNum);
   
             while (num > 0)
             {
@@ -129,16 +146,29 @@ namespace HexDecBin_Calculator
                 num /= 2;
             }
 
-            if (binaryRepersentation.Length % 4 != 0)
+            return FormatBinaryNumber(binaryRepersentation);
+        }
+
+
+
+        /// <summary>
+        /// Formats a binary number so that "unnecessary bits" will be filled up with 0's,
+        /// and sorts the binary number into the correct order.
+        /// </summary>
+        /// <param name="rawBinaryNum">The binary number which needs formating.</param>
+        /// <returns>A formated binary number.</returns>
+        private string FormatBinaryNumber(string rawBinaryNum)
+        {
+            if (rawBinaryNum.Length % 4 != 0)
             {
-                int numOfNibbels = (binaryRepersentation.Length/4)+1;
-                while (binaryRepersentation.Length < numOfNibbels * 4)
+                int numOfNibbels = (rawBinaryNum.Length / 4) + 1;
+                while (rawBinaryNum.Length < numOfNibbels * 4)
                 {
-                    binaryRepersentation += 0;
+                    rawBinaryNum += 0;
                 }
             }
 
-            return binaryRepersentation.Length == 0 ? "0000" : ReverseString(binaryRepersentation);
+            return rawBinaryNum.Length == 0 ? "0000" : ReverseString(rawBinaryNum);
         }
 
 
@@ -149,7 +179,7 @@ namespace HexDecBin_Calculator
         /// <param name="digitToConvert">The hexadecimal char.</param>
         /// <param name="digitPosition">The magnitued/position of the provided digit.</param>
         /// <returns>The decimal number as typeof int or decimal.</returns>
-        private object ConvertFromHexToDec(char digitToConvert, int digitPosition)
+        private object ConvertHexToDec(char digitToConvert, int digitPosition)
         {
             string digit = Convert.ToString(digitToConvert);
             int num;
@@ -247,7 +277,7 @@ namespace HexDecBin_Calculator
         /// </summary>
         /// <param name="numberToConvert">The decimal number which needs converting.</param>
         /// <returns>Hex representation of the input number.</returns>
-        public string ConvertFromDecToHex(int numberToConvert)
+        public string ConvertDecToHex(int numberToConvert)
         {
             return hexValues.FirstOrDefault(x => x.Value == numberToConvert).Key;
         }
