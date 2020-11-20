@@ -35,7 +35,7 @@ namespace HexDecBin_Calculator
         /// <summary>
         /// Converts a array of hexadecimal chars to its 10-base decimal counterpart.  
         /// </summary>
-        /// <param name="allHexDigits">The ordered array of hexadecimal digits from left to rigth.</param>
+        /// <param name="allHexDigits">Array with hexadecimal digits ordered from left to rigth.</param>
         /// <returns>The converted decimal number.</returns>
         public string ConvertInput(char[] allHexDigits)
         {
@@ -74,7 +74,7 @@ namespace HexDecBin_Calculator
 
 
         /// <summary>
-        /// Converts a string containing a decimal number to its hexadecimal counterpart. 
+        /// Converts a string containing a 10-base decimal number to its hexadecimal counterpart. 
         /// </summary>
         /// <param name="decimalNum">The decimal number to convert.</param>
         /// <returns>Hex representation of the input number or error.</returns>
@@ -107,7 +107,7 @@ namespace HexDecBin_Calculator
             {
                 if (!ContainsDigitsOnly(decimalNum))
                 {
-                    throw new Exception("Invailded input!");
+                    throw new Exception("Invaild input! Only numbers allowed!");
                 }
                 else
                 {
@@ -117,17 +117,31 @@ namespace HexDecBin_Calculator
         }
 
 
+
+        /// <summary>
+        /// Converts a array with binary digits to its 10-base decimal counterpart.
+        /// </summary>
+        /// <param name="binaryDigits">Array with binary digits ordered from left to rigth.</param>
+        /// <returns>The converted decimal number.</returns>
         public string ConvertInput(int[] binaryDigits)
         {
             int decimalNum = 0;
 
             for (int i = 0; i < binaryDigits.Length; i++)
             {
-                decimalNum += binaryDigits[i] * Convert.ToInt32(Math.Pow(2, i));
+                if (!(binaryDigits[i] > 1) && !(binaryDigits[i] < 0))
+                {
+                    decimalNum += binaryDigits[i] * Convert.ToInt32(Math.Pow(2, i));
+                }
+                else
+                {
+                    throw new Exception("Invaild input! Only 0's and 1's allowed!");
+                }
             }
-
+            
             return decimalNum.ToString();
         }
+
 
 
         /// <summary>
@@ -145,7 +159,7 @@ namespace HexDecBin_Calculator
                 binaryRepersentation += num % 2;
                 num /= 2;
             }
-
+            
             return FormatBinaryNumber(binaryRepersentation);
         }
 
@@ -191,7 +205,7 @@ namespace HexDecBin_Calculator
                 } 
                 else
                 {
-                    throw new Exception("Invailded input!");
+                    throw new Exception("Invaild input! Only numbers from 0-9 and letter from A-F allowed!");
                 }
             }
 

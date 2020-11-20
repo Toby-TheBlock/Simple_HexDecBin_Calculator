@@ -133,7 +133,9 @@ namespace HexDecBin_Calculator
             catch (Exception error)
             {
                 MessageBox.Show(error.Message);
-                txtInput.Text = txtInput.Text.Remove(txtInput.Text.Length - 1);
+                ManageEventhandler(txtInput, false);
+                txtInput.Text = txtInput.Text.Remove(txtInput.Text.Length-1);
+                ManageEventhandler(txtInput, true);
                 txtInput.SelectionLength = txtInput.Text.Length;
                 ResetOutput();
             }
@@ -285,6 +287,7 @@ namespace HexDecBin_Calculator
             digitCount--;
             SetInputPanelHeight(-1);
             SetRemovedBtnStatus();
+            ShowCalculatedValue(sender, e);
         }
 
 
