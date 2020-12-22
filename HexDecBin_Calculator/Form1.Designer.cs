@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.cboInput1 = new System.Windows.Forms.ComboBox();
-            this.plInputs = new System.Windows.Forms.Panel();
+            this.panInputs = new System.Windows.Forms.Panel();
             this.lblInput8 = new System.Windows.Forms.Label();
             this.lblInput7 = new System.Windows.Forms.Label();
             this.lblInput6 = new System.Windows.Forms.Label();
@@ -46,25 +46,29 @@
             this.cboInput4 = new System.Windows.Forms.ComboBox();
             this.cboInput3 = new System.Windows.Forms.ComboBox();
             this.cboInput2 = new System.Windows.Forms.ComboBox();
-            this.lblHeadLeft = new System.Windows.Forms.Label();
-            this.txtOutput = new System.Windows.Forms.TextBox();
-            this.btnChangeConversion = new System.Windows.Forms.Button();
-            this.lblHeadRight = new System.Windows.Forms.Label();
+            this.lblMainHeader = new System.Windows.Forms.Label();
+            this.txtOutputTop = new System.Windows.Forms.TextBox();
+            this.lblOutputTop = new System.Windows.Forms.Label();
             this.txtInput = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.btnAddDigit = new System.Windows.Forms.Button();
             this.btnRemoveDigit = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
-            this.plButtonContainer = new System.Windows.Forms.Panel();
+            this.panButtonContainer = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cboConversionType = new System.Windows.Forms.ComboBox();
             this.btnClearInput = new System.Windows.Forms.Button();
-            this.plInputs.SuspendLayout();
-            this.plButtonContainer.SuspendLayout();
+            this.txtOutputBottom = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblOutputBottom = new System.Windows.Forms.Label();
+            this.panInputs.SuspendLayout();
+            this.panButtonContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // cboInput1
             // 
             this.cboInput1.FormattingEnabled = true;
-            this.cboInput1.Location = new System.Drawing.Point(315, 21);
+            this.cboInput1.Location = new System.Drawing.Point(315, 35);
             this.cboInput1.Name = "cboInput1";
             this.cboInput1.Size = new System.Drawing.Size(38, 21);
             this.cboInput1.TabIndex = 0;
@@ -72,34 +76,34 @@
             this.cboInput1.SelectedIndexChanged += new System.EventHandler(this.ShowCalculatedValue);
             this.cboInput1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PreventManualInput);
             // 
-            // plInputs
+            // panInputs
             // 
-            this.plInputs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.plInputs.Controls.Add(this.lblInput8);
-            this.plInputs.Controls.Add(this.lblInput7);
-            this.plInputs.Controls.Add(this.lblInput6);
-            this.plInputs.Controls.Add(this.lblInput5);
-            this.plInputs.Controls.Add(this.lblInput4);
-            this.plInputs.Controls.Add(this.lblInput3);
-            this.plInputs.Controls.Add(this.lblInput2);
-            this.plInputs.Controls.Add(this.lblInput1);
-            this.plInputs.Controls.Add(this.cboInput8);
-            this.plInputs.Controls.Add(this.cboInput7);
-            this.plInputs.Controls.Add(this.cboInput6);
-            this.plInputs.Controls.Add(this.cboInput5);
-            this.plInputs.Controls.Add(this.cboInput4);
-            this.plInputs.Controls.Add(this.cboInput3);
-            this.plInputs.Controls.Add(this.cboInput2);
-            this.plInputs.Controls.Add(this.cboInput1);
-            this.plInputs.Location = new System.Drawing.Point(12, 44);
-            this.plInputs.Name = "plInputs";
-            this.plInputs.Size = new System.Drawing.Size(361, 53);
-            this.plInputs.TabIndex = 1;
+            this.panInputs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panInputs.Controls.Add(this.lblInput8);
+            this.panInputs.Controls.Add(this.lblInput7);
+            this.panInputs.Controls.Add(this.lblInput6);
+            this.panInputs.Controls.Add(this.lblInput5);
+            this.panInputs.Controls.Add(this.lblInput4);
+            this.panInputs.Controls.Add(this.lblInput3);
+            this.panInputs.Controls.Add(this.lblInput2);
+            this.panInputs.Controls.Add(this.lblInput1);
+            this.panInputs.Controls.Add(this.cboInput8);
+            this.panInputs.Controls.Add(this.cboInput7);
+            this.panInputs.Controls.Add(this.cboInput6);
+            this.panInputs.Controls.Add(this.cboInput5);
+            this.panInputs.Controls.Add(this.cboInput4);
+            this.panInputs.Controls.Add(this.cboInput3);
+            this.panInputs.Controls.Add(this.cboInput2);
+            this.panInputs.Controls.Add(this.cboInput1);
+            this.panInputs.Location = new System.Drawing.Point(12, 36);
+            this.panInputs.Name = "panInputs";
+            this.panInputs.Size = new System.Drawing.Size(361, 65);
+            this.panInputs.TabIndex = 1;
             // 
             // lblInput8
             // 
             this.lblInput8.AutoSize = true;
-            this.lblInput8.Location = new System.Drawing.Point(9, 5);
+            this.lblInput8.Location = new System.Drawing.Point(9, 19);
             this.lblInput8.Name = "lblInput8";
             this.lblInput8.Size = new System.Drawing.Size(37, 13);
             this.lblInput8.TabIndex = 14;
@@ -108,7 +112,7 @@
             // lblInput7
             // 
             this.lblInput7.AutoSize = true;
-            this.lblInput7.Location = new System.Drawing.Point(52, 5);
+            this.lblInput7.Location = new System.Drawing.Point(52, 19);
             this.lblInput7.Name = "lblInput7";
             this.lblInput7.Size = new System.Drawing.Size(37, 13);
             this.lblInput7.TabIndex = 13;
@@ -117,7 +121,7 @@
             // lblInput6
             // 
             this.lblInput6.AutoSize = true;
-            this.lblInput6.Location = new System.Drawing.Point(97, 5);
+            this.lblInput6.Location = new System.Drawing.Point(97, 19);
             this.lblInput6.Name = "lblInput6";
             this.lblInput6.Size = new System.Drawing.Size(37, 13);
             this.lblInput6.TabIndex = 12;
@@ -126,7 +130,7 @@
             // lblInput5
             // 
             this.lblInput5.AutoSize = true;
-            this.lblInput5.Location = new System.Drawing.Point(140, 5);
+            this.lblInput5.Location = new System.Drawing.Point(140, 19);
             this.lblInput5.Name = "lblInput5";
             this.lblInput5.Size = new System.Drawing.Size(37, 13);
             this.lblInput5.TabIndex = 11;
@@ -135,7 +139,7 @@
             // lblInput4
             // 
             this.lblInput4.AutoSize = true;
-            this.lblInput4.Location = new System.Drawing.Point(184, 5);
+            this.lblInput4.Location = new System.Drawing.Point(184, 19);
             this.lblInput4.Name = "lblInput4";
             this.lblInput4.Size = new System.Drawing.Size(37, 13);
             this.lblInput4.TabIndex = 10;
@@ -144,7 +148,7 @@
             // lblInput3
             // 
             this.lblInput3.AutoSize = true;
-            this.lblInput3.Location = new System.Drawing.Point(228, 5);
+            this.lblInput3.Location = new System.Drawing.Point(228, 19);
             this.lblInput3.Name = "lblInput3";
             this.lblInput3.Size = new System.Drawing.Size(37, 13);
             this.lblInput3.TabIndex = 11;
@@ -153,7 +157,7 @@
             // lblInput2
             // 
             this.lblInput2.AutoSize = true;
-            this.lblInput2.Location = new System.Drawing.Point(273, 5);
+            this.lblInput2.Location = new System.Drawing.Point(273, 19);
             this.lblInput2.Name = "lblInput2";
             this.lblInput2.Size = new System.Drawing.Size(37, 13);
             this.lblInput2.TabIndex = 12;
@@ -162,7 +166,7 @@
             // lblInput1
             // 
             this.lblInput1.AutoSize = true;
-            this.lblInput1.Location = new System.Drawing.Point(316, 5);
+            this.lblInput1.Location = new System.Drawing.Point(316, 19);
             this.lblInput1.Name = "lblInput1";
             this.lblInput1.Size = new System.Drawing.Size(37, 13);
             this.lblInput1.TabIndex = 8;
@@ -171,7 +175,7 @@
             // cboInput8
             // 
             this.cboInput8.FormattingEnabled = true;
-            this.cboInput8.Location = new System.Drawing.Point(7, 21);
+            this.cboInput8.Location = new System.Drawing.Point(7, 35);
             this.cboInput8.Name = "cboInput8";
             this.cboInput8.Size = new System.Drawing.Size(38, 21);
             this.cboInput8.TabIndex = 7;
@@ -182,7 +186,7 @@
             // cboInput7
             // 
             this.cboInput7.FormattingEnabled = true;
-            this.cboInput7.Location = new System.Drawing.Point(51, 21);
+            this.cboInput7.Location = new System.Drawing.Point(51, 35);
             this.cboInput7.Name = "cboInput7";
             this.cboInput7.Size = new System.Drawing.Size(38, 21);
             this.cboInput7.TabIndex = 6;
@@ -193,7 +197,7 @@
             // cboInput6
             // 
             this.cboInput6.FormattingEnabled = true;
-            this.cboInput6.Location = new System.Drawing.Point(95, 21);
+            this.cboInput6.Location = new System.Drawing.Point(95, 35);
             this.cboInput6.Name = "cboInput6";
             this.cboInput6.Size = new System.Drawing.Size(38, 21);
             this.cboInput6.TabIndex = 5;
@@ -204,7 +208,7 @@
             // cboInput5
             // 
             this.cboInput5.FormattingEnabled = true;
-            this.cboInput5.Location = new System.Drawing.Point(139, 21);
+            this.cboInput5.Location = new System.Drawing.Point(139, 35);
             this.cboInput5.Name = "cboInput5";
             this.cboInput5.Size = new System.Drawing.Size(38, 21);
             this.cboInput5.TabIndex = 4;
@@ -215,7 +219,7 @@
             // cboInput4
             // 
             this.cboInput4.FormattingEnabled = true;
-            this.cboInput4.Location = new System.Drawing.Point(183, 21);
+            this.cboInput4.Location = new System.Drawing.Point(183, 35);
             this.cboInput4.Name = "cboInput4";
             this.cboInput4.Size = new System.Drawing.Size(38, 21);
             this.cboInput4.TabIndex = 3;
@@ -226,7 +230,7 @@
             // cboInput3
             // 
             this.cboInput3.FormattingEnabled = true;
-            this.cboInput3.Location = new System.Drawing.Point(227, 21);
+            this.cboInput3.Location = new System.Drawing.Point(227, 35);
             this.cboInput3.Name = "cboInput3";
             this.cboInput3.Size = new System.Drawing.Size(38, 21);
             this.cboInput3.TabIndex = 2;
@@ -237,7 +241,7 @@
             // cboInput2
             // 
             this.cboInput2.FormattingEnabled = true;
-            this.cboInput2.Location = new System.Drawing.Point(271, 21);
+            this.cboInput2.Location = new System.Drawing.Point(271, 35);
             this.cboInput2.Name = "cboInput2";
             this.cboInput2.Size = new System.Drawing.Size(38, 21);
             this.cboInput2.TabIndex = 1;
@@ -245,42 +249,32 @@
             this.cboInput2.SelectedIndexChanged += new System.EventHandler(this.ShowCalculatedValue);
             this.cboInput2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PreventManualInput);
             // 
-            // lblHeadLeft
+            // lblMainHeader
             // 
-            this.lblHeadLeft.AutoSize = true;
-            this.lblHeadLeft.Location = new System.Drawing.Point(153, 17);
-            this.lblHeadLeft.Name = "lblHeadLeft";
-            this.lblHeadLeft.Size = new System.Drawing.Size(68, 13);
-            this.lblHeadLeft.TabIndex = 2;
-            this.lblHeadLeft.Text = "Hexadecimal";
+            this.lblMainHeader.AutoSize = true;
+            this.lblMainHeader.Location = new System.Drawing.Point(153, 17);
+            this.lblMainHeader.Name = "lblMainHeader";
+            this.lblMainHeader.Size = new System.Drawing.Size(68, 13);
+            this.lblMainHeader.TabIndex = 2;
+            this.lblMainHeader.Text = "Hexadecimal";
             // 
-            // txtOutput
+            // txtOutputTop
             // 
-            this.txtOutput.Location = new System.Drawing.Point(399, 67);
-            this.txtOutput.Name = "txtOutput";
-            this.txtOutput.ReadOnly = true;
-            this.txtOutput.Size = new System.Drawing.Size(147, 20);
-            this.txtOutput.TabIndex = 3;
-            this.txtOutput.Text = "0";
+            this.txtOutputTop.Location = new System.Drawing.Point(379, 36);
+            this.txtOutputTop.Name = "txtOutputTop";
+            this.txtOutputTop.ReadOnly = true;
+            this.txtOutputTop.Size = new System.Drawing.Size(175, 20);
+            this.txtOutputTop.TabIndex = 3;
+            this.txtOutputTop.Text = "0";
             // 
-            // btnChangeConversion
+            // lblOutputTop
             // 
-            this.btnChangeConversion.Location = new System.Drawing.Point(387, 3);
-            this.btnChangeConversion.Name = "btnChangeConversion";
-            this.btnChangeConversion.Size = new System.Drawing.Size(147, 55);
-            this.btnChangeConversion.TabIndex = 0;
-            this.btnChangeConversion.Text = "Convert From Hex to Dec";
-            this.btnChangeConversion.UseVisualStyleBackColor = true;
-            this.btnChangeConversion.Click += new System.EventHandler(this.btnChangeConversion_Click);
-            // 
-            // lblHeadRight
-            // 
-            this.lblHeadRight.AutoSize = true;
-            this.lblHeadRight.Location = new System.Drawing.Point(464, 44);
-            this.lblHeadRight.Name = "lblHeadRight";
-            this.lblHeadRight.Size = new System.Drawing.Size(45, 13);
-            this.lblHeadRight.TabIndex = 5;
-            this.lblHeadRight.Text = "Decimal";
+            this.lblOutputTop.AutoSize = true;
+            this.lblOutputTop.Location = new System.Drawing.Point(468, 17);
+            this.lblOutputTop.Name = "lblOutputTop";
+            this.lblOutputTop.Size = new System.Drawing.Size(45, 13);
+            this.lblOutputTop.TabIndex = 5;
+            this.lblOutputTop.Text = "Decimal";
             // 
             // txtInput
             // 
@@ -311,6 +305,7 @@
             // 
             // btnRemoveDigit
             // 
+            this.btnRemoveDigit.Enabled = false;
             this.btnRemoveDigit.Location = new System.Drawing.Point(96, 35);
             this.btnRemoveDigit.Name = "btnRemoveDigit";
             this.btnRemoveDigit.Size = new System.Drawing.Size(82, 23);
@@ -322,24 +317,48 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(418, 44);
+            this.label10.Location = new System.Drawing.Point(422, 17);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(40, 13);
             this.label10.TabIndex = 10;
             this.label10.Text = "Result:";
             // 
-            // plButtonContainer
+            // panButtonContainer
             // 
-            this.plButtonContainer.Controls.Add(this.btnClearInput);
-            this.plButtonContainer.Controls.Add(this.btnRemoveDigit);
-            this.plButtonContainer.Controls.Add(this.btnAddDigit);
-            this.plButtonContainer.Controls.Add(this.txtInput);
-            this.plButtonContainer.Controls.Add(this.btnChangeConversion);
-            this.plButtonContainer.Controls.Add(this.label9);
-            this.plButtonContainer.Location = new System.Drawing.Point(12, 109);
-            this.plButtonContainer.Name = "plButtonContainer";
-            this.plButtonContainer.Size = new System.Drawing.Size(539, 64);
-            this.plButtonContainer.TabIndex = 11;
+            this.panButtonContainer.Controls.Add(this.label3);
+            this.panButtonContainer.Controls.Add(this.cboConversionType);
+            this.panButtonContainer.Controls.Add(this.btnClearInput);
+            this.panButtonContainer.Controls.Add(this.btnRemoveDigit);
+            this.panButtonContainer.Controls.Add(this.btnAddDigit);
+            this.panButtonContainer.Controls.Add(this.txtInput);
+            this.panButtonContainer.Controls.Add(this.label9);
+            this.panButtonContainer.Location = new System.Drawing.Point(12, 110);
+            this.panButtonContainer.Name = "panButtonContainer";
+            this.panButtonContainer.Size = new System.Drawing.Size(550, 64);
+            this.panButtonContainer.TabIndex = 11;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(414, 10);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(87, 13);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "Conversion Type";
+            // 
+            // cboConversionType
+            // 
+            this.cboConversionType.FormattingEnabled = true;
+            this.cboConversionType.Items.AddRange(new object[] {
+            "Convert From Hex to Dec & Bin",
+            "Convert From Dec to Hex & Bin",
+            "Convert From Bin to Dec & Hex"});
+            this.cboConversionType.Location = new System.Drawing.Point(367, 26);
+            this.cboConversionType.Name = "cboConversionType";
+            this.cboConversionType.Size = new System.Drawing.Size(173, 21);
+            this.cboConversionType.TabIndex = 11;
+            this.cboConversionType.Text = "Convert From Hex to Dec & Bin";
+            this.cboConversionType.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // btnClearInput
             // 
@@ -351,26 +370,56 @@
             this.btnClearInput.UseVisualStyleBackColor = true;
             this.btnClearInput.Click += new System.EventHandler(this.btnClearInput_Click);
             // 
+            // txtOutputBottom
+            // 
+            this.txtOutputBottom.Location = new System.Drawing.Point(379, 81);
+            this.txtOutputBottom.Name = "txtOutputBottom";
+            this.txtOutputBottom.ReadOnly = true;
+            this.txtOutputBottom.Size = new System.Drawing.Size(175, 20);
+            this.txtOutputBottom.TabIndex = 12;
+            this.txtOutputBottom.Text = "0";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(422, 64);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(40, 13);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Result:";
+            // 
+            // lblOutputBottom
+            // 
+            this.lblOutputBottom.AutoSize = true;
+            this.lblOutputBottom.Location = new System.Drawing.Point(468, 64);
+            this.lblOutputBottom.Name = "lblOutputBottom";
+            this.lblOutputBottom.Size = new System.Drawing.Size(36, 13);
+            this.lblOutputBottom.TabIndex = 13;
+            this.lblOutputBottom.Text = "Binary";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(556, 180);
-            this.Controls.Add(this.plButtonContainer);
+            this.ClientSize = new System.Drawing.Size(563, 178);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblOutputBottom);
+            this.Controls.Add(this.txtOutputBottom);
+            this.Controls.Add(this.panButtonContainer);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.lblHeadRight);
-            this.Controls.Add(this.txtOutput);
-            this.Controls.Add(this.lblHeadLeft);
-            this.Controls.Add(this.plInputs);
+            this.Controls.Add(this.lblOutputTop);
+            this.Controls.Add(this.txtOutputTop);
+            this.Controls.Add(this.lblMainHeader);
+            this.Controls.Add(this.panInputs);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Hex/Dec Calculator";
-            this.plInputs.ResumeLayout(false);
-            this.plInputs.PerformLayout();
-            this.plButtonContainer.ResumeLayout(false);
-            this.plButtonContainer.PerformLayout();
+            this.Text = "Hex/Dec/Bin Calculator";
+            this.panInputs.ResumeLayout(false);
+            this.panInputs.PerformLayout();
+            this.panButtonContainer.ResumeLayout(false);
+            this.panButtonContainer.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -379,7 +428,7 @@
         #endregion
 
         private System.Windows.Forms.ComboBox cboInput1;
-        private System.Windows.Forms.Panel plInputs;
+        private System.Windows.Forms.Panel panInputs;
         private System.Windows.Forms.ComboBox cboInput8;
         private System.Windows.Forms.ComboBox cboInput7;
         private System.Windows.Forms.ComboBox cboInput6;
@@ -387,9 +436,8 @@
         private System.Windows.Forms.ComboBox cboInput4;
         private System.Windows.Forms.ComboBox cboInput3;
         private System.Windows.Forms.ComboBox cboInput2;
-        private System.Windows.Forms.Label lblHeadLeft;
-        private System.Windows.Forms.TextBox txtOutput;
-        private System.Windows.Forms.Button btnChangeConversion;
+        private System.Windows.Forms.Label lblMainHeader;
+        private System.Windows.Forms.TextBox txtOutputTop;
         private System.Windows.Forms.Label lblInput3;
         private System.Windows.Forms.Label lblInput2;
         private System.Windows.Forms.Label lblInput1;
@@ -398,14 +446,19 @@
         private System.Windows.Forms.Label lblInput6;
         private System.Windows.Forms.Label lblInput5;
         private System.Windows.Forms.Label lblInput4;
-        private System.Windows.Forms.Label lblHeadRight;
+        private System.Windows.Forms.Label lblOutputTop;
         private System.Windows.Forms.TextBox txtInput;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnAddDigit;
         private System.Windows.Forms.Button btnRemoveDigit;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Panel plButtonContainer;
+        private System.Windows.Forms.Panel panButtonContainer;
         private System.Windows.Forms.Button btnClearInput;
+        private System.Windows.Forms.TextBox txtOutputBottom;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblOutputBottom;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cboConversionType;
     }
 }
 

@@ -35,7 +35,7 @@ namespace HexDecBin_Calculator
         /// <summary>
         /// Converts a array of hexadecimal chars to its 10-base decimal counterpart.  
         /// </summary>
-        /// <param name="allHexDigits">The ordered array of hexadecimal digits from left to rigth.</param>
+        /// <param name="allHexDigits">Array with hexadecimal digits ordered from left to rigth.</param>
         /// <returns>The converted decimal number.</returns>
         public string ConvertInput(char[] allHexDigits)
         {
@@ -43,7 +43,7 @@ namespace HexDecBin_Calculator
 
             for (int i = 0; i < allHexDigits.Length; i++)
             {
-                tmpNums.Add(ConvertFromHexToDec(Convert.ToString(allHexDigits[i]), i));
+                tmpNums.Add(ConvertHexToDec(allHexDigits[i], i));
             }
 
             if (CheckForOverFlow(tmpNums))
@@ -74,23 +74,138 @@ namespace HexDecBin_Calculator
 
 
         /// <summary>
+        /// Converts a string containing a 10-base decimal number to its hexadecimal counterpart. 
+        /// </summary>
+        /// <param name="decimalNum">The decimal number to convert.</param>
+        /// <returns>Hex representation of the input number or error.</returns>
+        public string ConvertInput(string decimalNum)
+        {
+            ulong dividend;
+            if (UInt64.TryParse(decimalNum, out dividend))
+            {
+                string convertedResult = "";
+
+                if (dividend > 15)
+                {
+                    while (dividend > 16)
+                    {
+                        ulong remainder = dividend % 16;
+                        convertedResult += remainder > 9 ? ConvertDecToHex((int)remainder) : Convert.ToString(remainder);
+                        dividend /= 16;
+                    }
+
+                    convertedResult += dividend;
+                }
+                else
+                {
+                    convertedResult = dividend > 9 ? ConvertDecToHex((int)dividend) : Convert.ToString(dividend);
+                }
+
+                return ReverseString(convertedResult);
+            }
+            else
+            {
+                if (!ContainsDigitsOnly(decimalNum))
+                {
+                    throw new Exception("Invaild input! Only numbers allowed!");
+                }
+                else
+                {
+                    return "Error UInt64 overflow!";
+                }
+            }
+        }
+
+
+
+        /// <summary>
+        /// Converts a array with binary digits to its 10-base decimal counterpart.
+        /// </summary>
+        /// <param name="binaryDigits">Array with binary digits ordered from left to rigth.</param>
+        /// <returns>The converted decimal number.</returns>
+        public string ConvertInput(int[] binaryDigits)
+        {
+            int decimalNum = 0;
+
+            for (int i = 0; i < binaryDigits.Length; i++)
+            {
+                if (!(binaryDigits[i] > 1) && !(binaryDigits[i] < 0))
+                {
+                    decimalNum += binaryDigits[i] * Convert.ToInt32(Math.Pow(2, i));
+                }
+                else
+                {
+                    throw new Exception("Invaild input! Only 0's and 1's allowed!");
+                }
+            }
+            
+            return decimalNum.ToString();
+        }
+
+
+
+        /// <summary>
+        /// Converts a decimal number to its binary counterpart.
+        /// </summary>
+        /// <param name="decimalNum">The decimal number to convert.</param>
+        /// <returns>String representation of the converted binary number.</returns>
+        public string ConvertDecToBin(string decimalNum)
+        {
+            string binaryRepersentation = "";
+            ulong num = Convert.ToUInt64(decimalNum);
+  
+            while (num > 0)
+            {
+                binaryRepersentation += num % 2;
+                num /= 2;
+            }
+            
+            return FormatBinaryNumber(binaryRepersentation);
+        }
+
+
+
+        /// <summary>
+        /// Formats a binary number so that "unnecessary bits" will be filled up with 0's,
+        /// and sorts the binary number into the correct order.
+        /// </summary>
+        /// <param name="rawBinaryNum">The binary number which needs formating.</param>
+        /// <returns>A formated binary number.</returns>
+        private string FormatBinaryNumber(string rawBinaryNum)
+        {
+            if (rawBinaryNum.Length % 4 != 0)
+            {
+                int numOfNibbels = (rawBinaryNum.Length / 4) + 1;
+                while (rawBinaryNum.Length < numOfNibbels * 4)
+                {
+                    rawBinaryNum += 0;
+                }
+            }
+
+            return rawBinaryNum.Length == 0 ? "0000" : ReverseString(rawBinaryNum);
+        }
+
+
+
+        /// <summary>
         /// Converts a single hex number based on its value and its magnintued, to its decimal counterpart.
         /// </summary>
         /// <param name="digitToConvert">The hexadecimal char.</param>
         /// <param name="digitPosition">The magnitued/position of the provided digit.</param>
         /// <returns>The decimal number as typeof int or decimal.</returns>
-        private object ConvertFromHexToDec(string digitToConvert, int digitPosition)
+        private object ConvertHexToDec(char digitToConvert, int digitPosition)
         {
+            string digit = Convert.ToString(digitToConvert);
             int num;
-            if (!Int32.TryParse(digitToConvert, out num))
+            if (!Int32.TryParse(digit, out num))
             {
-                if (hexValues.ContainsKey(digitToConvert.ToUpper()))
+                if (hexValues.ContainsKey(digit.ToUpper()))
                 {
-                    num = hexValues[digitToConvert.ToUpper()];
+                    num = hexValues[digit.ToUpper()];
                 } 
                 else
                 {
-                    throw new Exception("Invailded input!");
+                    throw new Exception("Invaild input! Only numbers from 0-9 and letter from A-F allowed!");
                 }
             }
 
@@ -142,51 +257,6 @@ namespace HexDecBin_Calculator
 
 
         /// <summary>
-        /// Converts a string containing a decimal number to its hexadecimal counterpart. 
-        /// </summary>
-        /// <param name="decimalNumber">The decimal number to convert.</param>
-        /// <returns>Hex representation of the input number or error.</returns>
-        public string ConvertInput(string decimalNumber)
-        {
-            ulong dividend;
-            if (UInt64.TryParse(ReverseString(decimalNumber), out dividend))
-            {
-                string convertedResult = "";
-                
-                if (dividend > 15)
-                {
-                    while (dividend > 16)
-                    {
-                        ulong remainder = dividend % 16;
-                        convertedResult += remainder > 9 ? ConvertFromDecToHex((int)remainder) : Convert.ToString(remainder);
-                        dividend /= 16;
-                    }
-
-                    convertedResult += dividend;
-                }
-                else
-                {
-                    convertedResult = dividend > 9 ? ConvertFromDecToHex((int)dividend) : Convert.ToString(dividend);
-                }
-
-                return ReverseString(convertedResult);
-            }
-            else
-            {
-                if (!ContainsDigitsOnly(decimalNumber))
-                {
-                    throw new Exception("Invailded input!");
-                }
-                else
-                {
-                    return "Error UInt64 overflow!";
-                }
-            }
-        }
-
-
-
-        /// <summary>
         /// Goes through each char in a string and checks if its between 0-9.
         /// </summary>
         /// <param name="str">The string which is going to be checked.</param>
@@ -221,7 +291,7 @@ namespace HexDecBin_Calculator
         /// </summary>
         /// <param name="numberToConvert">The decimal number which needs converting.</param>
         /// <returns>Hex representation of the input number.</returns>
-        public string ConvertFromDecToHex(int numberToConvert)
+        public string ConvertDecToHex(int numberToConvert)
         {
             return hexValues.FirstOrDefault(x => x.Value == numberToConvert).Key;
         }

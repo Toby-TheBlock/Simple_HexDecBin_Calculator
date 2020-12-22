@@ -8,3 +8,13 @@ C:\Users\DailyDriver\OneDrive\Dokumenter\Programming\Simple_HexDecBin_Calculator
 C:\Users\DailyDriver\OneDrive\Dokumenter\Programming\Simple_HexDecBin_Calculator\HexDecBin_Calculator\obj\Debug\HexDecBin_Calculator.csproj.CoreCompileInputs.cache
 C:\Users\DailyDriver\OneDrive\Dokumenter\Programming\Simple_HexDecBin_Calculator\HexDecBin_Calculator\obj\Debug\HexDecBin_Calculator.exe
 C:\Users\DailyDriver\OneDrive\Dokumenter\Programming\Simple_HexDecBin_Calculator\HexDecBin_Calculator\obj\Debug\HexDecBin_Calculator.pdb
+C:\Users\Tobias\OneDrive\Dokumenter\Programming\Simple_HexDecBin_Calculator\HexDecBin_Calculator\bin\Debug\HexDecBin_Calculator.exe.config
+C:\Users\Tobias\OneDrive\Dokumenter\Programming\Simple_HexDecBin_Calculator\HexDecBin_Calculator\bin\Debug\HexDecBin_Calculator.exe
+C:\Users\Tobias\OneDrive\Dokumenter\Programming\Simple_HexDecBin_Calculator\HexDecBin_Calculator\bin\Debug\HexDecBin_Calculator.pdb
+C:\Users\Tobias\OneDrive\Dokumenter\Programming\Simple_HexDecBin_Calculator\HexDecBin_Calculator\obj\Debug\HexDecBin_Calculator.csprojAssemblyReference.cache
+C:\Users\Tobias\OneDrive\Dokumenter\Programming\Simple_HexDecBin_Calculator\HexDecBin_Calculator\obj\Debug\HexDecBin_Calculator.Form1.resources
+C:\Users\Tobias\OneDrive\Dokumenter\Programming\Simple_HexDecBin_Calculator\HexDecBin_Calculator\obj\Debug\HexDecBin_Calculator.Properties.Resources.resources
+C:\Users\Tobias\OneDrive\Dokumenter\Programming\Simple_HexDecBin_Calculator\HexDecBin_Calculator\obj\Debug\HexDecBin_Calculator.csproj.GenerateResource.cache
+C:\Users\Tobias\OneDrive\Dokumenter\Programming\Simple_HexDecBin_Calculator\HexDecBin_Calculator\obj\Debug\HexDecBin_Calculator.csproj.CoreCompileInputs.cache
+C:\Users\Tobias\OneDrive\Dokumenter\Programming\Simple_HexDecBin_Calculator\HexDecBin_Calculator\obj\Debug\HexDecBin_Calculator.exe
+C:\Users\Tobias\OneDrive\Dokumenter\Programming\Simple_HexDecBin_Calculator\HexDecBin_Calculator\obj\Debug\HexDecBin_Calculator.pdb
