@@ -93,7 +93,7 @@ namespace HexDecBin_Calculator
         {
             char[] cboValues;
 
-            if (sender is TextBox)
+            if (sender is TextBox && txtInput.Text.Length != 0)
             {
                 cboValues = Converter.Singleton.ReverseString(txtInput.Text).ToCharArray();
             }

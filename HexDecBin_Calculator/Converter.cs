@@ -87,14 +87,12 @@ namespace HexDecBin_Calculator
 
                 if (dividend > 15)
                 {
-                    while (dividend > 16)
+                    while (dividend > 0)
                     {
                         ulong remainder = dividend % 16;
                         convertedResult += remainder > 9 ? ConvertDecToHex((int)remainder) : Convert.ToString(remainder);
                         dividend /= 16;
                     }
-
-                    convertedResult += dividend;
                 }
                 else
                 {
